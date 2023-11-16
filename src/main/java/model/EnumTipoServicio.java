@@ -1,8 +1,8 @@
 
-package Model;
+package model;
 
 
-public enum TipoServicio {    
+public enum EnumTipoServicio {    
  WINDOWS,
  WINDOWS_SERVER,
  MS_OFFICE,

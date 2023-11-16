@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 16, 2023 at 04:11 PM
+-- Generation Time: Nov 16, 2023 at 09:05 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -46,6 +46,26 @@ INSERT INTO `Cliente` (`id`, `direccion`, `cuit`, `estado`, `mail`, `razonSocial
 (1, 'Av. Cabildo 1035', '2010500400', 1, 'hardsoft@hardsoft.com', 'HardSoft S.A.', '011456456', 'TANGO'),
 (8, 'Av. Siempre Viva 3055', '1622500500', 1, 'java@java.com', 'Java S.A.', '011999999', 'RHEL');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Tecnico`
+--
+
+CREATE TABLE `Tecnico` (
+  `id` int(11) NOT NULL,
+  `apellidoNombre` varchar(255) DEFAULT NULL,
+  `especialidad` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `Tecnico`
+--
+
+INSERT INTO `Tecnico` (`id`, `apellidoNombre`, `especialidad`) VALUES
+(1, 'Brown Emmet', 'TANGO'),
+(2, 'Wozniak Steve', 'RHEL');
+
 --
 -- Indexes for dumped tables
 --
@@ -58,6 +78,12 @@ ALTER TABLE `Cliente`
   ADD UNIQUE KEY `cuit` (`cuit`);
 
 --
+-- Indexes for table `Tecnico`
+--
+ALTER TABLE `Tecnico`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -66,6 +92,12 @@ ALTER TABLE `Cliente`
 --
 ALTER TABLE `Cliente`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `Tecnico`
+--
+ALTER TABLE `Tecnico`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

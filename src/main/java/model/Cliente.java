@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -32,7 +32,7 @@ public class Cliente implements Serializable {
     //Enum
     @Column(name = "tipoServicio")
     @Enumerated(EnumType.STRING)
-    private TipoServicio tipoServicio;
+    private EnumTipoServicio tipoServicio;
 
     @Column(name = "direccion")
     private String Direccion;
@@ -44,7 +44,7 @@ public class Cliente implements Serializable {
     public Cliente() {
     }
 
-    public Cliente(String cuit, String razonSocial, boolean estado, TipoServicio tipoServicio, String Direccion, String telefono, String mail) {
+    public Cliente(String cuit, String razonSocial, boolean estado, EnumTipoServicio tipoServicio, String Direccion, String telefono, String mail) {
         this.cuit = cuit;
         this.razonSocial = razonSocial;
         this.estado = estado;
@@ -54,7 +54,7 @@ public class Cliente implements Serializable {
         this.mail = mail;
     }
 
-    public Cliente(int id, String cuit, String razonSocial, boolean estado, TipoServicio tipoServicio, String Direccion, String telefono, String mail) {
+    public Cliente(int id, String cuit, String razonSocial, boolean estado, EnumTipoServicio tipoServicio, String Direccion, String telefono, String mail) {
         this.id = id;
         this.cuit = cuit;
         this.razonSocial = razonSocial;
@@ -97,11 +97,11 @@ public class Cliente implements Serializable {
         this.estado = estado;
     }
 
-    public TipoServicio getTipoServicio() {
+    public EnumTipoServicio getTipoServicio() {
         return tipoServicio;
     }
 
-    public void setTipoServicio(TipoServicio tipoServicio) {
+    public void setTipoServicio(EnumTipoServicio tipoServicio) {
         this.tipoServicio = tipoServicio;
     }
 

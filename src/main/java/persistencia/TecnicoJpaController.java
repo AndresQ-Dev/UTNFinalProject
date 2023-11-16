@@ -1,51 +1,46 @@
+
 package persistencia;
 
 import java.io.Serializable;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import javax.swing.JOptionPane;
-import model.Cliente;
+import model.Tecnico;
 import persistencia.exceptions.NonexistentEntityException;
 
-public class ClienteJpaController implements Serializable {
+/**
+ *
+ * @author andres
+ */
+public class TecnicoJpaController implements Serializable {
 
-    public ClienteJpaController(EntityManagerFactory emf) {
+    public TecnicoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-
+    
     //Constructor para usar método creados automáticamente...
-    public ClienteJpaController() {
+    public TecnicoJpaController() {
         emf = Persistence.createEntityManagerFactory("persistenceUnit");
     }
-
+    
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-    /*
-    TODO: Hacer que en caso de no estar dispoble la conección con la DB
-    muestre un mensaje en vez de caerse...
-     */
-    public void create(Cliente cliente) {
+    public void create(Tecnico tecnico) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(cliente);
+            em.persist(tecnico);
             em.getTransaction().commit();
-        } catch (PersistenceException e) {//agrego regla para los cuit duplicados
-            JOptionPane.showMessageDialog(null, "Cuit Duplicado.\n" + e.getCause());
         } finally {
             if (em != null) {
                 em.close();
@@ -53,23 +48,23 @@ public class ClienteJpaController implements Serializable {
         }
     }
 
-    public void edit(Cliente cliente) throws NonexistentEntityException, Exception {
+    public void edit(Tecnico tecnico) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            cliente = em.merge(cliente);
+            tecnico = em.merge(tecnico);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                int id = cliente.getId();
-                if (findCliente(id) == null) {
-                    throw new NonexistentEntityException("The cliente with id " + id + " no longer exists.");
+                int id = tecnico.getId();
+                if (findTecnico(id) == null) {
+                    throw new NonexistentEntityException("The tecnico with id " + id + " no longer exists.");
                 }
             }
             throw ex;
-        } finally {//por qué no usar Try-With-Resources
+        } finally {
             if (em != null) {
                 em.close();
             }
@@ -81,14 +76,14 @@ public class ClienteJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Cliente cliente;
+            Tecnico tecnico;
             try {
-                cliente = em.getReference(Cliente.class, id);
-                cliente.getId();
+                tecnico = em.getReference(Tecnico.class, id);
+                tecnico.getId();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The cliente with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The tecnico with id " + id + " no longer exists.", enfe);
             }
-            em.remove(cliente);
+            em.remove(tecnico);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -97,19 +92,19 @@ public class ClienteJpaController implements Serializable {
         }
     }
 
-    public List<Cliente> findClienteEntities() {
-        return findClienteEntities(true, -1, -1);
+    public List<Tecnico> findTecnicoEntities() {
+        return findTecnicoEntities(true, -1, -1);
     }
 
-    public List<Cliente> findClienteEntities(int maxResults, int firstResult) {
-        return findClienteEntities(false, maxResults, firstResult);
+    public List<Tecnico> findTecnicoEntities(int maxResults, int firstResult) {
+        return findTecnicoEntities(false, maxResults, firstResult);
     }
 
-    private List<Cliente> findClienteEntities(boolean all, int maxResults, int firstResult) {
+    private List<Tecnico> findTecnicoEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Cliente.class));
+            cq.select(cq.from(Tecnico.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -121,20 +116,20 @@ public class ClienteJpaController implements Serializable {
         }
     }
 
-    public Cliente findCliente(int id) {
+    public Tecnico findTecnico(int id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Cliente.class, id);
+            return em.find(Tecnico.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getClienteCount() {
+    public int getTecnicoCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Cliente> rt = cq.from(Cliente.class);
+            Root<Tecnico> rt = cq.from(Tecnico.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
@@ -142,5 +137,5 @@ public class ClienteJpaController implements Serializable {
             em.close();
         }
     }
-
+    
 }
