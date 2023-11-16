@@ -1,8 +1,8 @@
-#**Trabajo final Integrador de Curso "Java Intermedio" en UTN**
+# **Trabajo final Integrador de Curso "Java Intermedio" en UTN**
 
-##Sistema de Reporte de Incidentes
+## Sistema de Reporte de Incidentes
 
-###Contexto general
+### Contexto general
 
 Una importante empresa de soporte operativo solicita el diseño y desarrollo de un sistema
 que le permita la generación y seguimiento de los incidentes que se presentan.
