@@ -2,7 +2,7 @@
 
 ## Sistema de Reporte de Incidentes
 
-### Contexto general
+## Contexto general
 
 Una importante empresa de soporte operativo solicita el diseño y desarrollo de un sistema
 que le permita la generación y seguimiento de los incidentes que se presentan.
@@ -22,7 +22,7 @@ altas, bajas y modificaciones de los datos de cada uno de ellos.
 Finalmente, la mesa de ayuda es responsable de atender las llamadas e ingresar al sistema los
 incidentes reportados.
 
-### Ciclo de vida de un incidente
+## Ciclo de vida de un incidente
 
 Cuando un cliente llama, la mesa de ayuda le solicita los datos para identificarlo (razón social,
 CUIT) y los ingresa en el sistema para que el mismo le muestre los servicios que el cliente
@@ -43,7 +43,7 @@ Cuando el técnico atiende y resuelve el incidente, lo debe marcar como “resue
 las consideraciones que crea necesarias. Cuando esto ocurra, el sistema debe enviar un email
 al cliente informándole que su incidente ya está solucionado.
 
-### Otros requerimientos
+## Otros requerimientos
 * El sistema debe permitir al área de RRHH emitir diariamente reportes con los
 incidentes asignados a cada técnico y el estado de los mismos.
 
@@ -59,7 +59,7 @@ problemas de un mismo servicio. Dichos problemas deben estar relacionados.
     especialidad en los últimos N días
   * Quién fue el técnico que más rápido resolvió los incidentes
 
-### Consideraciones
+## Consideraciones
 
 * Cada tipo de problema particular puede ser solucionado por una o varias
 especialidades.
