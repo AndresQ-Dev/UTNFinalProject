@@ -3,3 +3,18 @@
 /dist/
 /nbproject/private/
 *.pdf
+
+# Maven
+target/
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+
+# JPA
+*.log
+*.properties
+
+# Compiled Java class files
+*.class
