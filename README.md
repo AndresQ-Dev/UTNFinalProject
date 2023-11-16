@@ -54,10 +54,10 @@ para la resolución del problema, si el mismo es considerado “complejo”.
 problemas de un mismo servicio. Dichos problemas deben estar relacionados.
 
 * El sistema debe dar la posibilidad de informar:
-○Quién fue el técnico con más incidentes resueltos en los últimos N días
-○Quién fue el técnico con más incidentes resueltos de una determinada
-especialidad en los últimos N días
-○Quién fue el técnico que más rápido resolvió los incidentes
+  * Quién fue el técnico con más incidentes resueltos en los últimos N días
+  * Quién fue el técnico con más incidentes resueltos de una determinada
+    especialidad en los últimos N días
+  * Quién fue el técnico que más rápido resolvió los incidentes
 
 ### Consideraciones
 
