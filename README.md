@@ -1,4 +1,3 @@
-::# UTNFinalProject
 #Trabajo final Integrador de Curso "Java Intermedio" en UTN
 ##Sistema de Reporte de Incidentes
 ###Contexto general
