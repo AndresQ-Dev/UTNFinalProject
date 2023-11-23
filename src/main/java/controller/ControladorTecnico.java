@@ -2,7 +2,7 @@
 package controller;
 
 import model.Tecnico;
-import persistencia.ControladoraPersistencia;
+import persistenceJPA.ControladoraPersistencia;
 
 /**
  *
@@ -17,9 +17,9 @@ public class ControladorTecnico {
       controlPersist.crearAlumno(cliente);
     }*/
 
-    ControladoraPersistencia controlPersist=new ControladoraPersistencia();
+    ControladoraPersistencia controlPersist=ControladoraPersistencia.getInstance();
     
     public void crearTecnico(Tecnico tecnico){
-       controlPersist.crearTecnico(tecnico); 
+       controlPersist.crearTecnico(tecnico);
     }
 }

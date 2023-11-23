@@ -129,4 +129,10 @@ public class Cliente implements Serializable {
         this.mail = mail;
     }
 
+    @Override
+    public String toString() {
+        return "Cliente{" + "id=" + id + ", cuit=" + cuit + ", razonSocial=" + razonSocial + ", estado=" + estado + ", tipoServicio=" + tipoServicio + ", Direccion=" + Direccion + ", telefono=" + telefono + ", mail=" + mail + '}';
+    }
+
+    
 }

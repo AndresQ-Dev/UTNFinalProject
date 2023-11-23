@@ -1,7 +1,6 @@
 
 package model;
 
-
 public enum EnumTipoServicio {    
  WINDOWS,
  WINDOWS_SERVER,

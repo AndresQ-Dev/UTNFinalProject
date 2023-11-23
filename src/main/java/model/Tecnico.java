@@ -27,19 +27,23 @@ public class Tecnico implements Serializable {
     @Column(name = "especialidad")
     @Enumerated(EnumType.STRING)
     private Especialidad categoria;
+    
+    private boolean estado;
 
     public Tecnico() {
     }
 
-    public Tecnico(String apellidoNombre, Especialidad categoria) {
+    public Tecnico(String apellidoNombre, Especialidad categoria, boolean estado) {
         this.apellidoNombre = apellidoNombre;
         this.categoria = categoria;
+        this.estado = estado;
     }
 
-    public Tecnico(int id, String apellidoNombre, Especialidad categoria) {
+    public Tecnico(int id, String apellidoNombre, Especialidad categoria, boolean estado) {
         this.id = id;
         this.apellidoNombre = apellidoNombre;
         this.categoria = categoria;
+        this.estado = estado;
     }
 
     public int getId() {
@@ -65,8 +69,15 @@ public class Tecnico implements Serializable {
     public void setCategoria(Especialidad categoria) {
         this.categoria = categoria;
     }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
     
- 
     
     
 }

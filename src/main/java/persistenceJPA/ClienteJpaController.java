@@ -1,4 +1,4 @@
-package persistencia;
+package persistenceJPA;
 
 import java.io.Serializable;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -34,7 +34,7 @@ public class ClienteJpaController implements Serializable {
     }
 
     /*
-    TODO: Hacer que en caso de no estar dispoble la conección con la DB
+    TODO: Hacer que en caso de no estar disponible la conexión con la DB
     muestre un mensaje en vez de caerse...
      */
     public void create(Cliente cliente) {
@@ -69,14 +69,14 @@ public class ClienteJpaController implements Serializable {
                 }
             }
             throw ex;
-        } finally {//por qué no usar Try-With-Resources
+        } finally {//por qué no usar Try-With-Resources??
             if (em != null) {
                 em.close();
             }
         }
     }
 
-    public void destroy(int id) throws NonexistentEntityException {
+    public void destroy(int id) throws NonexistentEntityException {//No me gusta... :(
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -90,6 +90,33 @@ public class ClienteJpaController implements Serializable {
             }
             em.remove(cliente);
             em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    //Agrego método para hacer un SoftDelete en vez de un Destroy
+    public void delete(int id) throws NonexistentEntityException, IllegalStateException {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+
+            Cliente cliente = em.find(Cliente.class, id);
+
+//            if (cliente == null) {//Si no existe...
+//                throw new NonexistentEntityException("El cliente con id " + id + " no existe.");
+//            }
+//            if (!cliente.isEstado()) {//si ya está dado de baja...
+//                throw new IllegalStateException("El Cliente con ID N° " + id + " ya se encuentra dado de baja.");
+//            }
+
+            // Setteo el estado a "False"
+            cliente.setEstado(false);
+            em.getTransaction().commit();
+            //JOptionPane.showMessageDialog(null, "Cliente Eliminado");
         } finally {
             if (em != null) {
                 em.close();
