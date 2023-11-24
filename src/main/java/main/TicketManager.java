@@ -51,7 +51,7 @@ public class TicketManager {
         System.out.println(Stream.of("Id: " +clienteEncontrado.getId(),"\nRazon Social: "+clienteEncontrado.getRazonSocial(),"\nTipo de Servicio Contratado: "+clienteEncontrado.getTipoServicio()).collect(Collectors.joining()));
         }else System.out.println("Nada por aca...");*/
         //Test SoftDelete
-        controlCliente.eliminarCliente(89);
+        controlCliente.eliminarCliente(80);
 
         
 

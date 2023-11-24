@@ -107,7 +107,7 @@ public class ClienteJpaController implements Serializable {
             Cliente cliente = em.find(Cliente.class, id);
 
             if (cliente == null) {//Si no existe...
-                throw new NonexistentEntityException("El cliente con ID " + id + " no existe.");
+                throw new NonexistentEntityException("");
             }
             if (!cliente.isEstado()) {//si ya está dado de baja...
                 throw new IllegalStateException("El Cliente con ID N° " + id + " ya se encuentra dado de baja.");
