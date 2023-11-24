@@ -29,21 +29,24 @@ public class Tecnico implements Serializable {
     private Especialidad categoria;
     
     private boolean estado;
+    private boolean disponibilidad;
 
     public Tecnico() {
     }
 
-    public Tecnico(String apellidoNombre, Especialidad categoria, boolean estado) {
+    public Tecnico(String apellidoNombre, Especialidad categoria, boolean estado, boolean disponibilidad) {
         this.apellidoNombre = apellidoNombre;
         this.categoria = categoria;
         this.estado = estado;
+        this.disponibilidad = disponibilidad;
     }
 
-    public Tecnico(int id, String apellidoNombre, Especialidad categoria, boolean estado) {
+    public Tecnico(int id, String apellidoNombre, Especialidad categoria, boolean estado, boolean disponibilidad) {
         this.id = id;
         this.apellidoNombre = apellidoNombre;
         this.categoria = categoria;
         this.estado = estado;
+        this.disponibilidad = disponibilidad;
     }
 
     public int getId() {
@@ -77,6 +80,16 @@ public class Tecnico implements Serializable {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+
+    public boolean isDisponibilidad() {
+        return disponibilidad;
+    }
+
+    public void setDisponibilidad(boolean disponibilidad) {
+        this.disponibilidad = disponibilidad;
+    }
+
+    
     
     
     
