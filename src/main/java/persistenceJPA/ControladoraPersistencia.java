@@ -52,7 +52,7 @@ public class ControladoraPersistencia {
 
 //TODO cómo se implementa el "Soft Delete" en este contexto?
 //se podría actualizar??? ;)
-    public void delete(int id) throws NonexistentEntityException{
+    public void delete(int id) throws NonexistentEntityException {
         clienteJpa.delete(id);
     }
 

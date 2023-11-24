@@ -51,13 +51,11 @@ public class TicketManager {
         System.out.println(Stream.of("Id: " +clienteEncontrado.getId(),"\nRazon Social: "+clienteEncontrado.getRazonSocial(),"\nTipo de Servicio Contratado: "+clienteEncontrado.getTipoServicio()).collect(Collectors.joining()));
         }else System.out.println("Nada por aca...");*/
         //Test SoftDelete
-        try {
-            controlCliente.eliminarCliente(100);
-        } catch (NonexistentEntityException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage()+"888Aquí  la exception");
-        }
+        controlCliente.eliminarCliente(89);
 
-        //===============================================í=======================
+        
+
+        //======================================================================
         /*
             //Se crea tabla Técnico
             ControladorTecnico controlTecnico=new ControladorTecnico();
