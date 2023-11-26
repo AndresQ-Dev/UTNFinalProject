@@ -52,7 +52,7 @@ public class ControladoraPersistencia {
 
 //TODO cómo se implementa el "Soft Delete" en este contexto?
 //se podría actualizar??? ;)
-    public void delete(int id) throws NonexistentEntityException {
+    public void deleteCliente(int id) throws NonexistentEntityException {
         clienteJpa.delete(id);
     }
 
@@ -73,11 +73,15 @@ public class ControladoraPersistencia {
         tecnicoJpa.edit(tecnico);
     }
 
-    public void listarTecnico() {
-        tecnicoJpa.findTecnicoEntities();
+    public List<Tecnico> listarTecnico() {
+        return tecnicoJpa.findTecnicoEntities();
     }
 
-    public void buscarTecnicoPorId(int id) {
-        tecnicoJpa.findTecnico(id);
+    public Tecnico buscarTecnicoPorId(int id) {
+        return tecnicoJpa.findTecnico(id);
+    }
+    
+    public void eliminarTecnico(int id) throws NonexistentEntityException{
+        tecnicoJpa.deleteTecnico(id);
     }
 }

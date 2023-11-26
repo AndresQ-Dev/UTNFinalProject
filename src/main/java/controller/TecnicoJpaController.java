@@ -2,21 +2,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package persistenceJPA;
+package controller;
 
+import controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.swing.JOptionPane;
 import model.Tecnico;
-import persistencia.exceptions.NonexistentEntityException;
 
 /**
  *
@@ -27,12 +27,6 @@ public class TecnicoJpaController implements Serializable {
     public TecnicoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-
-    //Constructor para usar método creados automáticamente...
-    public TecnicoJpaController() {
-        emf = Persistence.createEntityManagerFactory("persistenceUnit");
-    }
-
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -46,8 +40,8 @@ public class TecnicoJpaController implements Serializable {
             em.getTransaction().begin();
             em.persist(tecnico);
             em.getTransaction().commit();
-        } catch (PersistenceException e) {
-            JOptionPane.showMessageDialog(null, "Cuil duplicado");
+        } catch (EntityExistsException e) {//agrego regla para los cuit duplicados
+            JOptionPane.showMessageDialog(null, "Cuit Duplicado.\n" + e.getCause());
         } finally {
             if (em != null) {
                 em.close();
@@ -60,14 +54,6 @@ public class TecnicoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-
-            // Verificar si la entidad ya existe
-            Tecnico existingTecnico = em.find(Tecnico.class, tecnico.getId());
-
-            if (existingTecnico == null) {
-                throw new NonexistentEntityException("The tecnico with id " + tecnico.getId() + " does not exist.");
-            }
-
             tecnico = em.merge(tecnico);
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -86,23 +72,20 @@ public class TecnicoJpaController implements Serializable {
         }
     }
 
-    public void deleteTecnico(int id) throws NonexistentEntityException {
+    public void destroy(int id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Tecnico tecnico = em.find(Tecnico.class, id);
-
-            if (tecnico == null) {//Si no existe...
-                throw new NonexistentEntityException("");
+            Tecnico tecnico;
+            try {
+                tecnico = em.getReference(Tecnico.class, id);
+                tecnico.getId();
+            } catch (EntityNotFoundException enfe) {
+                throw new NonexistentEntityException("The tecnico with id " + id + " no longer exists.", enfe);
             }
-            if (!tecnico.isEstado()) {//si ya está dado de baja...
-                throw new IllegalStateException("El Tecnico con ID N° " + id + " ya se encuentra dado de baja.");
-            }
-            //setteo estado a "false"
-            tecnico.setEstado(false);
+            em.remove(tecnico);
             em.getTransaction().commit();
-            JOptionPane.showMessageDialog(null, "Técnico Eliminado");
         } finally {
             if (em != null) {
                 em.close();

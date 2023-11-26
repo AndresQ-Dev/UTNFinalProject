@@ -1,4 +1,3 @@
-
 package model;
 
 import java.io.Serializable;
@@ -13,36 +12,43 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Tecnico")
+@Table(name = "Tecnico")
 public class Tecnico implements Serializable {
-  
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
+    @Column(name="cuil", unique = true,nullable = false)
+    private String cuil;
     
-    @Column(name = "apellidoNombre")
+    @Column(name = "apellidoNombre",nullable = false)
     private String apellidoNombre;
-    
-    @Column(name = "especialidad")
+
+    @Column(name = "especialidad",nullable = false)
     @Enumerated(EnumType.STRING)
-    private Especialidad categoria;
-    
+    private EnumTipoServicio categoria;
+
+    @Column(name = "estado")
     private boolean estado;
+    @Column(name = "disponibilidad")
     private boolean disponibilidad;
 
     public Tecnico() {
     }
 
-    public Tecnico(String apellidoNombre, Especialidad categoria, boolean estado, boolean disponibilidad) {
+    public Tecnico(String cuil, String apellidoNombre, EnumTipoServicio categoria, boolean estado, boolean disponibilidad) {
+        this.cuil = cuil;
         this.apellidoNombre = apellidoNombre;
         this.categoria = categoria;
         this.estado = estado;
         this.disponibilidad = disponibilidad;
     }
 
-    public Tecnico(int id, String apellidoNombre, Especialidad categoria, boolean estado, boolean disponibilidad) {
+    public Tecnico(int id, String cuil, String apellidoNombre, EnumTipoServicio categoria, boolean estado, boolean disponibilidad) {
         this.id = id;
+        this.cuil = cuil;
         this.apellidoNombre = apellidoNombre;
         this.categoria = categoria;
         this.estado = estado;
@@ -57,6 +63,14 @@ public class Tecnico implements Serializable {
         this.id = id;
     }
 
+    public String getCuil() {
+        return cuil;
+    }
+
+    public void setCuil(String cuil) {
+        this.cuil = cuil;
+    }
+
     public String getApellidoNombre() {
         return apellidoNombre;
     }
@@ -65,11 +79,11 @@ public class Tecnico implements Serializable {
         this.apellidoNombre = apellidoNombre;
     }
 
-    public Especialidad getCategoria() {
+    public EnumTipoServicio getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(Especialidad categoria) {
+    public void setCategoria(EnumTipoServicio categoria) {
         this.categoria = categoria;
     }
 
@@ -90,7 +104,5 @@ public class Tecnico implements Serializable {
     }
 
     
-    
-    
-    
+
 }

@@ -18,27 +18,27 @@ public class Cliente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id",nullable = false)
     private int id;
     @Basic
-    @Column(name = "cuit", unique = true)
+    @Column(name = "cuit", unique = true,nullable = false)
     private String cuit;
     @Basic
-    @Column(name = "razonSocial")
+    @Column(name = "razonSocial",nullable = false)
     private String razonSocial;
     //private String nombreFantasia;
     @Column(name = "estado")
     private boolean estado;
     //Enum
-    @Column(name = "tipoServicio")
+    @Column(name = "tipoServicio",nullable = false)
     @Enumerated(EnumType.STRING)
     private EnumTipoServicio tipoServicio;
 
-    @Column(name = "direccion")
+    @Column(name = "direccion",nullable = false)
     private String Direccion;
-    @Column(name = "telefono")
+    @Column(name = "telefono",nullable = false)
     private String telefono;
-    @Column(name = "mail")
+    @Column(name = "mail",nullable = false)
     private String mail;
 
     public Cliente() {
