@@ -59,7 +59,7 @@ public class TecnicoJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                int id = tecnico.getId();
+                int id = tecnico.getIdTecnico();
                 if (findTecnico(id) == null) {
                     throw new NonexistentEntityException("The tecnico with id " + id + " no longer exists.");
                 }
@@ -80,7 +80,7 @@ public class TecnicoJpaController implements Serializable {
             Tecnico tecnico;
             try {
                 tecnico = em.getReference(Tecnico.class, id);
-                tecnico.getId();
+                tecnico.getIdTecnico();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The tecnico with id " + id + " no longer exists.", enfe);
             }

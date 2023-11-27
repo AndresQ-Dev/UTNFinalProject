@@ -1,8 +1,9 @@
-
 package model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,44 +14,48 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "Incidente")
 public class Incidente implements Serializable {
-  
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int idIncidente;
-    
+
     @ManyToOne
-    @JoinColumn(name="id", nullable=false)
+    @JoinColumn(name = "idCliente", nullable = false)
     private Cliente cliente;
     @ManyToOne
-    @JoinColumn(name="id", nullable=false)
+    @JoinColumn(name = "idTecnico", nullable = false)
     private Tecnico tecnico;
-    
-    @Column(name = "categoria",nullable = false)
+
+    @Column(name = "categoria", nullable = false)
     @Enumerated(EnumType.STRING)
     private EnumTipoServicio categoriaServicio;
-    
+
     @Column(name = "detalle", nullable = false)
     private String detalle;
-    
+
     @Column(name = "observacionesTecnico")
     private String observacionesTecnico;
-    
+
     @Column(name = "fechaAlta", nullable = false)
-    private LocalDateTime fechaAlta;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaAlta;
     @Column(name = "fechaFin")
-    private LocalDateTime fechaFinalizacion;
-    
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaFinalizacion;
+
     private boolean estado;
 
     public Incidente() {
     }
 
-    public Incidente(Cliente cliente, Tecnico tecnico, EnumTipoServicio categoriaServicio, String detalle, String observacionesTecnico, LocalDateTime fechaAlta, LocalDateTime fechaFinalizacion, boolean estado) {
+    public Incidente(Cliente cliente, Tecnico tecnico, EnumTipoServicio categoriaServicio, String detalle, String observacionesTecnico, Date fechaAlta, Date fechaFinalizacion, boolean estado) {
         this.cliente = cliente;
         this.tecnico = tecnico;
         this.categoriaServicio = categoriaServicio;
@@ -61,7 +66,7 @@ public class Incidente implements Serializable {
         this.estado = estado;
     }
 
-    public Incidente(Cliente cliente, Tecnico tecnico, EnumTipoServicio categoriaServicio, String detalle, LocalDateTime fechaAlta, boolean estado) {
+    public Incidente(Cliente cliente, Tecnico tecnico, EnumTipoServicio categoriaServicio, String detalle, Date fechaAlta, boolean estado) {
         this.cliente = cliente;
         this.tecnico = tecnico;
         this.categoriaServicio = categoriaServicio;
@@ -70,7 +75,7 @@ public class Incidente implements Serializable {
         this.estado = estado;
     }
 
-    public Incidente(int idIncidente, Cliente cliente, Tecnico tecnico, EnumTipoServicio categoriaServicio, String detalle, String observacionesTecnico, LocalDateTime fechaAlta, LocalDateTime fechaFinalizacion, boolean estado) {
+    public Incidente(int idIncidente, Cliente cliente, Tecnico tecnico, EnumTipoServicio categoriaServicio, String detalle, String observacionesTecnico, Date fechaAlta, Date fechaFinalizacion, boolean estado) {
         this.idIncidente = idIncidente;
         this.cliente = cliente;
         this.tecnico = tecnico;
@@ -130,19 +135,19 @@ public class Incidente implements Serializable {
         this.observacionesTecnico = observacionesTecnico;
     }
 
-    public LocalDateTime getFechaAlta() {
+    public Date getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(LocalDateTime fechaAlta) {
+    public void setFechaAlta(Date fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
 
-    public LocalDateTime getFechaFinalizacion() {
+    public Date getFechaFinalizacion() {
         return fechaFinalizacion;
     }
 
-    public void setFechaFinalizacion(LocalDateTime fechaFinalizacion) {
+    public void setFechaFinalizacion(Date fechaFinalizacion) {
         this.fechaFinalizacion = fechaFinalizacion;
     }
 
@@ -153,7 +158,4 @@ public class Incidente implements Serializable {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
-    
-    
-    
 }

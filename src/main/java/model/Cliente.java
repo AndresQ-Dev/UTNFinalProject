@@ -19,7 +19,7 @@ public class Cliente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id",nullable = false)
-    private int id;
+    private int idCliente;
     @Basic
     @Column(name = "cuit", unique = true,nullable = false)
     private String cuit;
@@ -55,7 +55,7 @@ public class Cliente implements Serializable {
     }
 
     public Cliente(int id, String cuit, String razonSocial, boolean estado, EnumTipoServicio tipoServicio, String Direccion, String telefono, String mail) {
-        this.id = id;
+        this.idCliente = id;
         this.cuit = cuit;
         this.razonSocial = razonSocial;
         this.estado = estado;
@@ -65,12 +65,12 @@ public class Cliente implements Serializable {
         this.mail = mail;
     }
 
-    public int getId() {
-        return id;
+    public int getIdCliente() {
+        return idCliente;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
 
     public String getCuit() {
@@ -131,7 +131,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "Cliente{" + "id=" + id + ", cuit=" + cuit + ", razonSocial=" + razonSocial + ", estado=" + estado + ", tipoServicio=" + tipoServicio + ", Direccion=" + Direccion + ", telefono=" + telefono + ", mail=" + mail + '}';
+        return "Cliente{" + "id=" + idCliente + ", cuit=" + cuit + ", razonSocial=" + razonSocial + ", estado=" + estado + ", tipoServicio=" + tipoServicio + ", Direccion=" + Direccion + ", telefono=" + telefono + ", mail=" + mail + '}';
     }
 
     

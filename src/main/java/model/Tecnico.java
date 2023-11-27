@@ -18,7 +18,7 @@ public class Tecnico implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private int idTecnico;
 
     @Column(name="cuil", unique = true,nullable = false)
     private String cuil;
@@ -47,7 +47,7 @@ public class Tecnico implements Serializable {
     }
 
     public Tecnico(int id, String cuil, String apellidoNombre, EnumTipoServicio categoria, boolean estado, boolean disponibilidad) {
-        this.id = id;
+        this.idTecnico = id;
         this.cuil = cuil;
         this.apellidoNombre = apellidoNombre;
         this.categoria = categoria;
@@ -55,12 +55,12 @@ public class Tecnico implements Serializable {
         this.disponibilidad = disponibilidad;
     }
 
-    public int getId() {
-        return id;
+    public int getIdTecnico() {
+        return idTecnico;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdTecnico(int idTecnico) {
+        this.idTecnico = idTecnico;
     }
 
     public String getCuil() {

@@ -62,10 +62,10 @@ public class TecnicoJpaController implements Serializable {
             em.getTransaction().begin();
 
             // Verificar si la entidad ya existe
-            Tecnico existingTecnico = em.find(Tecnico.class, tecnico.getId());
+            Tecnico existingTecnico = em.find(Tecnico.class, tecnico.getIdTecnico());
 
             if (existingTecnico == null) {
-                throw new NonexistentEntityException("The tecnico with id " + tecnico.getId() + " does not exist.");
+                throw new NonexistentEntityException("The tecnico with id " + tecnico.getIdTecnico() + " does not exist.");
             }
 
             tecnico = em.merge(tecnico);
@@ -73,7 +73,7 @@ public class TecnicoJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                int id = tecnico.getId();
+                int id = tecnico.getIdTecnico();
                 if (findTecnico(id) == null) {
                     throw new NonexistentEntityException("The tecnico with id " + id + " no longer exists.");
                 }

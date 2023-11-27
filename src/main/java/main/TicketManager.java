@@ -1,8 +1,12 @@
 package main;
 
 import controller.ControladorCliente;
+import controller.ControladorIncidente;
 import controller.ControladorTecnico;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,6 +15,7 @@ import java.util.stream.Stream;
 import javax.swing.JOptionPane;
 import model.Cliente;
 import model.EnumTipoServicio;
+import model.Incidente;
 import model.Tecnico;
 import persistenceJPA.ControladoraPersistencia;
 import persistencia.exceptions.NonexistentEntityException;
@@ -97,11 +102,28 @@ public class TicketManager {
                     + "\nDisponibilidad: " + tec.isDisponibilidad()
                     + "\nEstado: "+tec.isEstado()+"\n"));
         }*/
-
         //======================================================================//
-    
         //Tabla Incidentes
         //Prueba Metodo Crear
-        
+        ControladorIncidente controlIncidente = new ControladorIncidente();
+
+        Cliente cliente1 = new Cliente("20150000008", "ProClean S.A.", true, EnumTipoServicio.TANGO, "Los Arayanes 1500", "26115456456", "proclean@proclean.com");
+        Cliente cliente2 = new Cliente("20150000002", "Tech Solutions", true, EnumTipoServicio.WINDOWS_SERVER, "Tech Street 123, Tech City, Techland", "123456789", "info@techsolutions.com");
+        Cliente cliente3 = new Cliente("20150000003", "Green Energy Corp.", true, EnumTipoServicio.LINUX_DESKTOP, "Green Avenue 789, Eco City, Greendland", "987654321", "info@greenenergy.com");
+        Cliente cliente4 = new Cliente("20150000004", "Global Finance Ltd.", true, EnumTipoServicio.DATABASE_MANAGER, "Finance Street 456, Money City, Richland", "555888999", "info@globalfinance.com");
+        Cliente cliente5 = new Cliente("20150000005", "Health Innovations Inc.", true, EnumTipoServicio.MS_OFFICE, "Health Street 567, Medi City, Healthyland", "777111333", "info@healthinnovations.com");
+        Cliente cliente6 = new Cliente("20150000006", "Innovation Labs LLC", true, EnumTipoServicio.SERVER_DEBIAN, "Innovation Lane 789, Tech Hub, Innovationland", "999333555", "info@innovationlabs.com");
+
+        /*controlCliente.crearCliente(cliente1);
+        controlCliente.crearCliente(cliente2);
+        controlCliente.crearCliente(cliente3);
+        controlCliente.crearCliente(cliente4);
+        controlCliente.crearCliente(cliente5);
+        controlCliente.crearCliente(cliente6);*/
+        Tecnico tec1 = controlTecnico.buscarTecnicoPorID(1);
+        Cliente cli1=controlCliente.buscarClientePorId(3);
+        String detalle = "Ubuntu 22.04 no termina de cargar al inicio. Muestra pantalla negra despues de login...";
+        Incidente incidenteA = new Incidente(cli1, tec1, EnumTipoServicio.LINUX_DESKTOP, detalle, Date.from(Instant.now()), true);
+        controlIncidente.crearIncidente(incidenteA);
     }
 }

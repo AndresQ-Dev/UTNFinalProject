@@ -63,7 +63,7 @@ public class ClienteJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                int id = cliente.getId();
+                int id = cliente.getIdCliente();
                 if (findCliente(id) == null) {
                     throw new NonexistentEntityException("The cliente with id " + id + " no longer exists.");
                 }
@@ -84,7 +84,7 @@ public class ClienteJpaController implements Serializable {
             Cliente cliente;
             try {
                 cliente = em.getReference(Cliente.class, id);
-                cliente.getId();
+                cliente.getIdCliente();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The cliente with id " + id + " no longer exists.", enfe);
             }

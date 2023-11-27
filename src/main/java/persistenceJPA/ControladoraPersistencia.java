@@ -6,6 +6,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import model.Cliente;
 import model.Tecnico;
+import model.Incidente;
 import persistencia.exceptions.NonexistentEntityException;
 
 /*Controla cada una de las instancias de la JpaController 
@@ -15,6 +16,7 @@ public class ControladoraPersistencia {
 // =====Pruebo Implementación de SINGLETON=====
     private final ClienteJpaController clienteJpa; //variable global para Controlador JPA
     private final TecnicoJpaController tecnicoJpa; //variable global para Controlador JPA
+    private final IncidenteJpaController incidenteJpa; //variable global para Controlador JPA
 
 // Instancia única Controlador de Persistencia
     private static final ControladoraPersistencia instanciaContPersistencia = new ControladoraPersistencia();
@@ -28,6 +30,7 @@ public class ControladoraPersistencia {
         emf = Persistence.createEntityManagerFactory("persistenceUnit");
         clienteJpa = new ClienteJpaController(emf);
         tecnicoJpa = new TecnicoJpaController(emf);
+        incidenteJpa=new IncidenteJpaController(emf);
     }
 
 // Método para obtener la instancia única de la clase
@@ -83,5 +86,10 @@ public class ControladoraPersistencia {
     
     public void eliminarTecnico(int id) throws NonexistentEntityException{
         tecnicoJpa.deleteTecnico(id);
+    }
+    
+    //==============Metodos para Incidente=================//
+    public void crearIncidente(Incidente incidente){
+      incidenteJpa.create(incidente);
     }
 }
