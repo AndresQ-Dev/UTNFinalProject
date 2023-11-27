@@ -5,9 +5,12 @@ import controller.ControladorIncidente;
 import controller.ControladorTecnico;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -107,23 +110,24 @@ public class TicketManager {
         //Prueba Metodo Crear
         ControladorIncidente controlIncidente = new ControladorIncidente();
 
-        Cliente cliente1 = new Cliente("20150000008", "ProClean S.A.", true, EnumTipoServicio.TANGO, "Los Arayanes 1500", "26115456456", "proclean@proclean.com");
-        Cliente cliente2 = new Cliente("20150000002", "Tech Solutions", true, EnumTipoServicio.WINDOWS_SERVER, "Tech Street 123, Tech City, Techland", "123456789", "info@techsolutions.com");
-        Cliente cliente3 = new Cliente("20150000003", "Green Energy Corp.", true, EnumTipoServicio.LINUX_DESKTOP, "Green Avenue 789, Eco City, Greendland", "987654321", "info@greenenergy.com");
-        Cliente cliente4 = new Cliente("20150000004", "Global Finance Ltd.", true, EnumTipoServicio.DATABASE_MANAGER, "Finance Street 456, Money City, Richland", "555888999", "info@globalfinance.com");
-        Cliente cliente5 = new Cliente("20150000005", "Health Innovations Inc.", true, EnumTipoServicio.MS_OFFICE, "Health Street 567, Medi City, Healthyland", "777111333", "info@healthinnovations.com");
-        Cliente cliente6 = new Cliente("20150000006", "Innovation Labs LLC", true, EnumTipoServicio.SERVER_DEBIAN, "Innovation Lane 789, Tech Hub, Innovationland", "999333555", "info@innovationlabs.com");
+        
+            //Tecnico tec1 = controlTecnico.buscarTecnicoPorID(1);
+            /*Tecnico tec4 = controlTecnico.buscarTecnicoPorID(4);
+            Cliente cli4 = controlCliente.buscarClientePorId(2);
+            String detalle = "Ubuntu 22.04 no termina de cargar al inicio. Muestra pantalla negra despues de login...";
+            Incidente incidenteA = new Incidente(cli1, tec1, EnumTipoServicio.LINUX_DESKTOP, detalle, Date.from(Instant.now()), true);
+            controlIncidente.crearIncidente(incidenteA);
+            String detalle = "Problema con usuario administrador registrado en Windows Server, no se reconoce...";
+            Incidente incidenteC = new Incidente(cli4, tec4, EnumTipoServicio.WINDOWS_SERVER, detalle, Date.from(Instant.now()), true);
+            controlIncidente.crearIncidente(incidenteC);*/
+            //Prueba Metodo Eliminar
+        try{
+            controlIncidente.eliminarIncidente(6);
+        } catch (persistenceJPA.exceptions.NonexistentEntityException ex) {
+            JOptionPane.showMessageDialog(null, "No existe..."+ex.fillInStackTrace());
+        }catch(IllegalStateException ise){
+            JOptionPane.showMessageDialog(null, "Error: "+ise.fillInStackTrace());
+        }
 
-        /*controlCliente.crearCliente(cliente1);
-        controlCliente.crearCliente(cliente2);
-        controlCliente.crearCliente(cliente3);
-        controlCliente.crearCliente(cliente4);
-        controlCliente.crearCliente(cliente5);
-        controlCliente.crearCliente(cliente6);*/
-        Tecnico tec1 = controlTecnico.buscarTecnicoPorID(1);
-        Cliente cli1=controlCliente.buscarClientePorId(3);
-        String detalle = "Ubuntu 22.04 no termina de cargar al inicio. Muestra pantalla negra despues de login...";
-        Incidente incidenteA = new Incidente(cli1, tec1, EnumTipoServicio.LINUX_DESKTOP, detalle, Date.from(Instant.now()), true);
-        controlIncidente.crearIncidente(incidenteA);
     }
 }

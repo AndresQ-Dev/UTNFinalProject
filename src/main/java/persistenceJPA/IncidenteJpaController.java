@@ -13,6 +13,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.swing.JOptionPane;
 import model.Incidente;
 import persistenceJPA.exceptions.NonexistentEntityException;
 
@@ -74,20 +75,47 @@ public class IncidenteJpaController implements Serializable {
         }
     }
 
-    public void destroy(int id) throws NonexistentEntityException {
+//    public void destroy(int id) throws NonexistentEntityException {
+//        EntityManager em = null;
+//        try {
+//            em = getEntityManager();
+//            em.getTransaction().begin();
+//            Incidente incidente;
+//            try {
+//                incidente = em.getReference(Incidente.class, id);
+//                incidente.getIdIncidente();
+//            } catch (EntityNotFoundException enfe) {
+//                throw new NonexistentEntityException("The incidente with id " + id + " no longer exists.", enfe);
+//            }
+//            em.remove(incidente);
+//            em.getTransaction().commit();
+//        } finally {
+//            if (em != null) {
+//                em.close();
+//            }
+//        }
+//    }
+    
+    //Se implementa softDelete para Incidente
+    public void destroySoftIncident(int id) throws NonexistentEntityException, IllegalStateException {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Incidente incidente;
-            try {
-                incidente = em.getReference(Incidente.class, id);
-                incidente.getIdIncidente();
-            } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The incidente with id " + id + " no longer exists.", enfe);
+            Incidente incidente=em.find(Incidente.class, id);
+            
+            
+            if (incidente == null) {//Si no existe...
+                throw new NonexistentEntityException("");
             }
-            em.remove(incidente);
+            if (!incidente.isEstado()) {//si ya está dado de baja...
+                throw new IllegalStateException("El Incidente con ID N° " + id + " ya se encuentra dado de baja.");
+            }
+            
+            //setteo estado a "false"
+            incidente.setEstado(false);
             em.getTransaction().commit();
+            JOptionPane.showMessageDialog(null, "Incidente Eliminado Correctamente");
         } finally {
             if (em != null) {
                 em.close();

@@ -50,6 +50,7 @@ public class Incidente implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaFinalizacion;
 
+    @Column(name = "estado")
     private boolean estado;
 
     public Incidente() {
