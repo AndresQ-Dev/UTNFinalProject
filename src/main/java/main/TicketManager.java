@@ -110,16 +110,15 @@ public class TicketManager {
         //Prueba Metodo Crear
         ControladorIncidente controlIncidente = new ControladorIncidente();
 
-        
-            //Tecnico tec1 = controlTecnico.buscarTecnicoPorID(1);
-            /*Tecnico tec4 = controlTecnico.buscarTecnicoPorID(4);
+        //Tecnico tec1 = controlTecnico.buscarTecnicoPorID(1);
+        /*Tecnico tec4 = controlTecnico.buscarTecnicoPorID(4);
             Cliente cli4 = controlCliente.buscarClientePorId(2);
             String detalle = "Ubuntu 22.04 no termina de cargar al inicio. Muestra pantalla negra despues de login...";
             Incidente incidenteA = new Incidente(cli1, tec1, EnumTipoServicio.LINUX_DESKTOP, detalle, Date.from(Instant.now()), true);
             controlIncidente.crearIncidente(incidenteA);
             String detalle = "Problema con usuario administrador registrado en Windows Server, no se reconoce...";
             Incidente incidenteC = new Incidente(cli4, tec4, EnumTipoServicio.WINDOWS_SERVER, detalle, Date.from(Instant.now()), true);
-            controlIncidente.crearIncidente(incidenteC);*/
+            controlIncidente.crearIncidente(incidenteC);
             //Prueba Metodo Eliminar
         try{
             controlIncidente.eliminarIncidente(6);
@@ -127,7 +126,34 @@ public class TicketManager {
             JOptionPane.showMessageDialog(null, "No existe..."+ex.fillInStackTrace());
         }catch(IllegalStateException ise){
             JOptionPane.showMessageDialog(null, "Error: "+ise.fillInStackTrace());
+        } 
+        //Prueba Metodo Editar y Buscar por ID
+        Incidente incidente1 = controlIncidente.buscarIncidentePorId(166);
+        if (incidente1!=null) {  
+        incidente1.setEstado(true);
+        incidente1.setFechaAlta(new Date());
+        try {
+            controlIncidente.editarIncidente(incidente1);
+        } catch (Exception ex) {
+            Logger.getLogger(TicketManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+        }else{
+            JOptionPane.showMessageDialog(null, "No existe... no se encuentra...");
+        } */
+        //Prueba Metodo Listar Incidentes
+        List<Incidente> listadoIncidentes = controlIncidente.listarIncidentes();
 
+        if (listadoIncidentes != null) {
+            listadoIncidentes.forEach(inci -> {
+                System.out.println("Incidente: " + inci.getIdIncidente()
+                        + "\nCliente: " + inci.getCliente().getRazonSocial()
+                        + "\nTécnico: " + inci.getTecnico().getApellidoNombre()
+                        + "\nTipo de Servicio: " + inci.getCategoriaServicio()
+                        + "\nDetalle: " + inci.getDetalle()
+                        + "\nFecha de Alta: " + inci.getFechaAlta()
+                        + "\nEstado: " + inci.isEstado() 
+                        + "\n*******************************************");
+            });
+        }
     }
 }

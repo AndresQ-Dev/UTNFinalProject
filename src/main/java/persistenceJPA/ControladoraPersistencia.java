@@ -96,4 +96,16 @@ public class ControladoraPersistencia {
     public void eliminarIncidente(int id) throws persistenceJPA.exceptions.NonexistentEntityException,IllegalStateException{
         incidenteJpa.destroySoftIncident(id);
     }
+    
+    public void editarIncidente(Incidente incidente) throws Exception{
+        incidenteJpa.edit(incidente);
+    }
+    
+    public Incidente buscarIncidentePorId(int id){
+        return incidenteJpa.findIncidente(id);
+    }
+    
+    public List<Incidente> listarincidentes(){
+        return incidenteJpa.findIncidenteEntities();
+    }
 }

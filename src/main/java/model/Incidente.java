@@ -159,4 +159,6 @@ public class Incidente implements Serializable {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+    
+    
 }
