@@ -139,7 +139,7 @@ public class TicketManager {
         }
         }else{
             JOptionPane.showMessageDialog(null, "No existe... no se encuentra...");
-        } */
+        } 
         //Prueba Metodo Listar Incidentes
         List<Incidente> listadoIncidentes = controlIncidente.listarIncidentes();
 
@@ -154,6 +154,8 @@ public class TicketManager {
                         + "\nEstado: " + inci.isEstado() 
                         + "\n*******************************************");
             });
-        }
+        } */
+        //PRUEBAS CONCLUIDAS...
+        
     }
 }

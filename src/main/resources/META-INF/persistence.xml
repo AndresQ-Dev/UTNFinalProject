@@ -12,5 +12,15 @@
             <property name="javax.persistence.jdbc.password" value=""/>
             <property name="javax.persistence.schema-generation.database.action" value="create"/>
         </properties>
+        <dependency>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf</artifactId>
+            <version>3.2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf-intellij-themes</artifactId>
+            <version>3.2.5</version>
+        </dependency>
     </persistence-unit>
 </persistence>

@@ -1,5 +1,6 @@
 package persistenceJPA;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -45,7 +46,7 @@ public class ControladoraPersistencia {
     }
 
 //===============Métodos para CLIENTE================//
-    public void crearCliente(Cliente cliente) {
+    public void crearCliente(Cliente cliente) throws SQLIntegrityConstraintViolationException {
         clienteJpa.create(cliente);
     }
 

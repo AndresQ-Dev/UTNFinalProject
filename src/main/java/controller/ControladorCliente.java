@@ -1,5 +1,7 @@
 package controller;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import model.Cliente;
@@ -12,7 +14,7 @@ public class ControladorCliente {
     //Clase controladora para llamar a los métodos de la controladora de Persistencia
     ControladoraPersistencia controlPersist = ControladoraPersistencia.getInstance();
 
-    public void crearCliente(Cliente cliente) {
+    public void crearCliente(Cliente cliente) throws SQLIntegrityConstraintViolationException {
         controlPersist.crearCliente(cliente);
     }
 
@@ -36,7 +38,20 @@ public class ControladorCliente {
         } catch (IllegalStateException ex) {//si ya esta dado de baja...
             JOptionPane.showMessageDialog(null, "El cliente ya se encuentra dado de baja.");
         } catch (Exception ex) {//cualquier otra Excepcion...
-            JOptionPane.showMessageDialog(null, "Exception general"+ ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Exception general" + ex.getMessage());
         }
+    }
+
+    //Método AdHoc para busqueda por Cuit
+    public List<Cliente> buscarClientePorCuit(String cuit) {
+        List<Cliente> resultadosBusqueda = new ArrayList<>();
+// Obtengo la lista completa de Clientes para luego filtrar.
+        List<Cliente> listaClientes = controlPersist.listarClientes();
+        // Lambda para agregar coincidencias...
+        listaClientes.stream()
+                .filter(cliente -> cliente.getCuit().equals(cuit))
+                .forEach(cliente -> resultadosBusqueda.add(cliente));
+
+        return resultadosBusqueda;
     }
 }

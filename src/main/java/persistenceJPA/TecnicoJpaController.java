@@ -46,8 +46,8 @@ public class TecnicoJpaController implements Serializable {
             em.getTransaction().begin();
             em.persist(tecnico);
             em.getTransaction().commit();
-        } catch (PersistenceException e) {
-            JOptionPane.showMessageDialog(null, "Cuil duplicado");
+        //} catch (PersistenceException e) {
+            //JOptionPane.showMessageDialog(null, "Cuil duplicado");
         } finally {
             if (em != null) {
                 em.close();
@@ -86,7 +86,7 @@ public class TecnicoJpaController implements Serializable {
         }
     }
 
-    public void deleteTecnico(int id) throws NonexistentEntityException {
+    public void deleteTecnico(int id) throws NonexistentEntityException, IllegalStateException {
         EntityManager em = null;
         try {
             em = getEntityManager();

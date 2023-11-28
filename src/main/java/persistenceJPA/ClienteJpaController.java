@@ -44,8 +44,8 @@ public class ClienteJpaController implements Serializable {
             em.getTransaction().begin();
             em.persist(cliente);
             em.getTransaction().commit();
-        } catch (PersistenceException e) {//agrego regla para los cuit duplicados
-            JOptionPane.showMessageDialog(null, "Cuit Duplicado.\n" + e.getCause());
+//        } catch (PersistenceException e) {//agrego regla para los cuit duplicados
+//            JOptionPane.showMessageDialog(null, "Cuit Duplicado.");
         } finally {
             if (em != null) {
                 em.close();
@@ -116,7 +116,7 @@ public class ClienteJpaController implements Serializable {
             // Setteo el estado a "False"
             cliente.setEstado(false);
             em.getTransaction().commit();
-            JOptionPane.showMessageDialog(null, "Cliente Eliminado");
+            JOptionPane.showMessageDialog(null, "Cliente Eliminado Correctamente.");
         } finally {
             if (em != null) {
                 em.close();
