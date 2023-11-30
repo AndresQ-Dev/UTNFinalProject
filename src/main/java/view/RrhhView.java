@@ -1,7 +1,10 @@
 package view;
 
 import Service.Validar;
+import controller.ControladorIncidente;
 import controller.ControladorTecnico;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,14 +16,25 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import model.Cliente;
 import model.EnumTipoServicio;
+import model.Incidente;
 import model.Tecnico;
 import persistencia.exceptions.NonexistentEntityException;
 
 public class RrhhView extends javax.swing.JPanel {
 
     private ControladorTecnico controlTecnico = new ControladorTecnico();
+    private ControladorIncidente controlIncidente = new ControladorIncidente();
+    //Formato para mostrar la fecha y hora 
+    private DateFormat dateFormat = new SimpleDateFormat("EEEEE, dd/MM/yyyy HH:mm:ss");
 
     DefaultTableModel modeloTablaTecnicos = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
+
+    DefaultTableModel modeloTablaListadoIncidentes = new DefaultTableModel() {
         @Override
         public boolean isCellEditable(int row, int column) {
             return false;
@@ -32,6 +46,8 @@ public class RrhhView extends javax.swing.JPanel {
         cargaCombo();
         cabeceraTablaTecnico();
         cargarTablaTecnico();
+        cargarCabeceraTablaListadoIncidentes();
+        cargarTablaListadoIncidentes();
     }
 
     /**
@@ -66,6 +82,9 @@ public class RrhhView extends javax.swing.JPanel {
         tbTecnicos = new javax.swing.JTable();
         cbEditar = new javax.swing.JCheckBox();
         pIncidentes = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbListadoIncidentes = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
         pRanking = new javax.swing.JPanel();
 
         setPreferredSize(new java.awt.Dimension(1024, 740));
@@ -240,7 +259,7 @@ public class RrhhView extends javax.swing.JPanel {
                                     .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(tfCuil, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)))
                 .addGap(18, 18, 18))
         );
         pGestionLayout.setVerticalGroup(
@@ -293,15 +312,44 @@ public class RrhhView extends javax.swing.JPanel {
 
         pIncidentes.setBackground(new java.awt.Color(102, 102, 0));
 
+        tbListadoIncidentes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tbListadoIncidentes);
+
+        jLabel1.setFont(new java.awt.Font("Cantarell", 1, 36)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Estado de Incidentes");
+
         javax.swing.GroupLayout pIncidentesLayout = new javax.swing.GroupLayout(pIncidentes);
         pIncidentes.setLayout(pIncidentesLayout);
         pIncidentesLayout.setHorizontalGroup(
             pIncidentesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 976, Short.MAX_VALUE)
+            .addGroup(pIncidentesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(pIncidentesLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE)
+                .addGap(29, 29, 29))
         );
         pIncidentesLayout.setVerticalGroup(
             pIncidentesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 575, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pIncidentesLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(jLabel1)
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPane2)
+                .addGap(89, 89, 89))
         );
 
         jTabbedPane1.addTab("Estado Incidentes", pIncidentes);
@@ -312,7 +360,7 @@ public class RrhhView extends javax.swing.JPanel {
         pRanking.setLayout(pRankingLayout);
         pRankingLayout.setHorizontalGroup(
             pRankingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 976, Short.MAX_VALUE)
+            .addGap(0, 986, Short.MAX_VALUE)
         );
         pRankingLayout.setVerticalGroup(
             pRankingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -330,7 +378,7 @@ public class RrhhView extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 976, Short.MAX_VALUE)
+                        .addComponent(jTabbedPane1)
                         .addGap(12, 12, 12)))
                 .addContainerGap())
         );
@@ -340,7 +388,7 @@ public class RrhhView extends javax.swing.JPanel {
                 .addGap(17, 17, 17)
                 .addComponent(lbTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 610, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 667, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -462,7 +510,7 @@ public class RrhhView extends javax.swing.JPanel {
                     desactivarCampos();
                     cargarTablaTecnico();
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Registro duplicado"+e.getMessage());
+                    JOptionPane.showMessageDialog(null, "Registro duplicado" + e.getMessage());
                     limpiarCampos();
                     desactivarCampos();
                 }
@@ -478,12 +526,14 @@ public class RrhhView extends javax.swing.JPanel {
     private javax.swing.JCheckBox cbEditar;
     private javax.swing.JComboBox<EnumTipoServicio> cbEspecialidad;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lbTitulo;
     private javax.swing.JPanel pGestion;
@@ -491,6 +541,7 @@ public class RrhhView extends javax.swing.JPanel {
     private javax.swing.JPanel pRanking;
     private javax.swing.JRadioButton rbDisponibilidad;
     private javax.swing.JRadioButton rbEstado;
+    private javax.swing.JTable tbListadoIncidentes;
     private javax.swing.JTable tbTecnicos;
     private javax.swing.JTextField tfApellidoNombre;
     private javax.swing.JTextField tfBusqueda;
@@ -575,8 +626,8 @@ public class RrhhView extends javax.swing.JPanel {
         String apellidoNombre = tfApellidoNombre.getText();
         EnumTipoServicio especialidad = (EnumTipoServicio) cbEspecialidad.getSelectedItem();
         //Comprobar contenido
-        int espeIndex=cbEspecialidad.getSelectedIndex();
-        if (cuit.isEmpty() || apellidoNombre.isEmpty() || espeIndex==-1) {
+        int espeIndex = cbEspecialidad.getSelectedIndex();
+        if (cuit.isEmpty() || apellidoNombre.isEmpty() || espeIndex == -1) {
             JOptionPane.showMessageDialog(null, "No se aceptan campos nulos.");
             return null;
         }
@@ -594,5 +645,41 @@ public class RrhhView extends javax.swing.JPanel {
         tecnico.setEstado(rbEstado.isSelected());
 
         return tecnico;
+    }
+
+    private void cargarCabeceraTablaListadoIncidentes() {
+        modeloTablaListadoIncidentes.addColumn("ID");
+        modeloTablaListadoIncidentes.addColumn("Cliente");
+        modeloTablaListadoIncidentes.addColumn("TipoServicio");
+        modeloTablaListadoIncidentes.addColumn("Tecnico");
+        modeloTablaListadoIncidentes.addColumn("Detalle");
+        modeloTablaListadoIncidentes.addColumn("Obs.Técnico");
+        modeloTablaListadoIncidentes.addColumn("FechaAlta");
+        modeloTablaListadoIncidentes.addColumn("Estado");
+        tbListadoIncidentes.setModel(modeloTablaListadoIncidentes);
+    }
+
+    private void limpiarTablaListadoIncidentes() {
+        modeloTablaListadoIncidentes.setRowCount(0);
+    }
+
+    private void cargarTablaListadoIncidentes() {
+        limpiarTablaListadoIncidentes();
+        List<Incidente> listaIncidentes = controlIncidente.listarIncidentes();
+        if (listaIncidentes != null) {
+            for (Incidente incidente : listaIncidentes) {
+                String estado = incidente.isEstado() ? "Activo" : "Finalizado";
+                modeloTablaListadoIncidentes.addRow(new Object[]{incidente.getIdIncidente(),
+                    incidente.getCliente().getRazonSocial(),
+                    incidente.getCategoriaServicio().toString(),
+                    incidente.getTecnico().getApellidoNombre(),
+                    incidente.getDetalle(),
+                    incidente.getObservacionesTecnico(),
+                    dateFormat.format(incidente.getFechaAlta()),
+                    estado});
+            }
+        }
+        TableColumnModel columnModel2 = tbListadoIncidentes.getColumnModel();
+        columnModel2.getColumn(0).setMaxWidth(20);
     }
 }
