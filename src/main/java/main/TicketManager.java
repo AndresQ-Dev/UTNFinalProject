@@ -3,6 +3,7 @@ package main;
 import controller.ControladorCliente;
 import controller.ControladorIncidente;
 import controller.ControladorTecnico;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -156,6 +157,34 @@ public class TicketManager {
             });
         } */
         //PRUEBAS CONCLUIDAS...
-        
+//        Tecnico tec1= controlTecnico.buscarTecnicoPorID(2);
+//        Cliente cli1 = controlCliente.buscarClientePorId(1);
+//        String detalle = "Despues de actualización de Windows 11 en Pc4 no se muestra menu inferior de inicio...";
+//        
+//        Incidente incidenteA = new Incidente(cli1, tec1, EnumTipoServicio.WINDOWS, detalle, Date.from(Instant.now()), true);
+//        controlIncidente.crearIncidente(incidenteA);
+//Incidente inci1=controlIncidente.buscarIncidentePorId(1);
+//String obsTec="Se encontraron varias fallas en HDD, se cambia por un SSD.";
+//inci1.setObservacionesTecnico(obsTec);
+//inci1.setEstado(false);
+//inci1.setFechaFinalizacion(Date.from(Instant.now()));
+//
+//        try {
+//            controlIncidente.editarIncidente(inci1);
+//        } catch (Exception ex) {
+//            Logger.getLogger(TicketManager.class.getName()).log(Level.SEVERE, null, ex);
+//            System.out.println("paso algo..."+ex.getMessage());
+//        }
+        Incidente inciUpate = controlIncidente.buscarIncidentePorId(7);
+        System.out.println("estado antes " + inciUpate.isEstado());
+        try {
+            controlIncidente.eliminarIncidente(7);
+        } catch (persistenceJPA.exceptions.NonexistentEntityException ex) {
+            Logger.getLogger(TicketManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalStateException ex) {
+            Logger.getLogger(TicketManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Incidente despues = controlIncidente.buscarIncidentePorId(7);
+        System.out.println("estado despues " + despues.isEstado());
     }
 }

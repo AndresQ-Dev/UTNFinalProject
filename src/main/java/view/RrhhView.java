@@ -240,7 +240,7 @@ public class RrhhView extends javax.swing.JPanel {
                                     .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(tfCuil, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)))
                 .addGap(18, 18, 18))
         );
         pGestionLayout.setVerticalGroup(
@@ -297,7 +297,7 @@ public class RrhhView extends javax.swing.JPanel {
         pIncidentes.setLayout(pIncidentesLayout);
         pIncidentesLayout.setHorizontalGroup(
             pIncidentesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1000, Short.MAX_VALUE)
+            .addGap(0, 976, Short.MAX_VALUE)
         );
         pIncidentesLayout.setVerticalGroup(
             pIncidentesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -312,7 +312,7 @@ public class RrhhView extends javax.swing.JPanel {
         pRanking.setLayout(pRankingLayout);
         pRankingLayout.setHorizontalGroup(
             pRankingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1000, Short.MAX_VALUE)
+            .addGap(0, 976, Short.MAX_VALUE)
         );
         pRankingLayout.setVerticalGroup(
             pRankingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -330,7 +330,7 @@ public class RrhhView extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTabbedPane1)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 976, Short.MAX_VALUE)
                         .addGap(12, 12, 12)))
                 .addContainerGap())
         );

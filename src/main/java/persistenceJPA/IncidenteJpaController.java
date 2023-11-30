@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package persistenceJPA;
 
 import java.io.Serializable;
@@ -26,12 +22,12 @@ public class IncidenteJpaController implements Serializable {
     public IncidenteJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    
+
     //Constructor para usar método creados automáticamente...
     public IncidenteJpaController() {
         emf = Persistence.createEntityManagerFactory("persistenceUnit");
     }
-    
+
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -95,23 +91,21 @@ public class IncidenteJpaController implements Serializable {
 //            }
 //        }
 //    }
-    
     //Se implementa softDelete para Incidente
     public void destroySoftIncident(int id) throws NonexistentEntityException, IllegalStateException {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Incidente incidente=em.find(Incidente.class, id);
-            
-            
+            Incidente incidente = em.find(Incidente.class, id);
+
             if (incidente == null) {//Si no existe...
                 throw new NonexistentEntityException("");
             }
             if (!incidente.isEstado()) {//si ya está dado de baja...
                 throw new IllegalStateException("El Incidente con ID N° " + id + " ya se encuentra dado de baja.");
             }
-            
+
             //setteo estado a "false"
             incidente.setEstado(false);
             em.getTransaction().commit();
@@ -168,5 +162,5 @@ public class IncidenteJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }
