@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Tecnico")
-public class Tecnico implements Serializable {
+public class Tecnico implements Serializable, Comparable<Tecnico> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -103,6 +103,15 @@ public class Tecnico implements Serializable {
         this.disponibilidad = disponibilidad;
     }
 
-    
+    @Override
+public String toString() {
+    return "ID: " + idTecnico + " - " + apellidoNombre;
+}
+
+    @Override
+    public int compareTo(Tecnico otroTecnico) {
+        // Comparar por apellido y nombre
+        return this.apellidoNombre.compareTo(otroTecnico.apellidoNombre);
+    }
 
 }

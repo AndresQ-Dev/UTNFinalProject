@@ -3,6 +3,7 @@ package model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -160,5 +161,29 @@ public class Incidente implements Serializable {
         this.estado = estado;
     }
     
-    
+    //////////////////////////////////////////////
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Incidente incidente = (Incidente) obj;
+        return idIncidente == incidente.idIncidente
+                && estado == incidente.estado
+                && Objects.equals(cliente, incidente.cliente)
+                && Objects.equals(tecnico, incidente.tecnico)
+                && categoriaServicio == incidente.categoriaServicio
+                && Objects.equals(detalle, incidente.detalle)
+                && Objects.equals(observacionesTecnico, incidente.observacionesTecnico)
+                && Objects.equals(fechaAlta, incidente.fechaAlta)
+                && Objects.equals(fechaFinalizacion, incidente.fechaFinalizacion);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idIncidente, cliente, tecnico, categoriaServicio, detalle, observacionesTecnico, fechaAlta, fechaFinalizacion, estado);
+    }
 }
