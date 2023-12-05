@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import model.Incidente;
 import model.Tecnico;
+import Service.CustomJTable;
 
 public class TecnicoView extends javax.swing.JPanel {
 
@@ -63,7 +64,7 @@ public class TecnicoView extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         cbListadoTecnicos = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbListaIncidentesPorTecnicos = new javax.swing.JTable();
+        tbListaIncidentesPorTecnicos = new CustomJTable();
         jButton1 = new javax.swing.JButton();
         tfIdIncidente = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();

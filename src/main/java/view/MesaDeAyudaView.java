@@ -20,6 +20,7 @@ import model.Incidente;
 import model.EnumTipoServicio;
 import model.Tecnico;
 import persistenceJPA.exceptions.NonexistentEntityException;
+import Service.CustomJTable;
 
 /**
  *
@@ -84,7 +85,7 @@ public class MesaDeAyudaView extends javax.swing.JPanel {
         tfAlta = new javax.swing.JTextField();
         tfFin = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tbIncidentes = new javax.swing.JTable();
+        tbIncidentes = new CustomJTable();
         btNuevo = new javax.swing.JButton();
         btEliminar = new javax.swing.JButton();
         btGuardar = new javax.swing.JButton();
@@ -93,7 +94,7 @@ public class MesaDeAyudaView extends javax.swing.JPanel {
         lbBusquedaPorTicket = new javax.swing.JLabel();
         lbBusquedaPorCuit = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tbClientes = new javax.swing.JTable();
+        tbClientes = new CustomJTable();
         jLabel13 = new javax.swing.JLabel();
         tfBusquedaCliente = new javax.swing.JTextField();
 

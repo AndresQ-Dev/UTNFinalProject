@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import model.Cliente;
 import model.EnumTipoServicio;
+import Service.CustomJTable;
 
 public class ComercialView extends javax.swing.JPanel {
 
@@ -63,7 +64,7 @@ public class ComercialView extends javax.swing.JPanel {
         tfMail = new javax.swing.JTextField();
         rbEstado = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbClientes = new javax.swing.JTable();
+        tbClientes = new CustomJTable();
         cbEditar = new javax.swing.JCheckBox();
 
         jLabel1.setFont(new java.awt.Font("Cantarell", 1, 36)); // NOI18N

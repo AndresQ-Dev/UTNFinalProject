@@ -29,6 +29,7 @@ import model.EnumTipoServicio;
 import model.Incidente;
 import model.Tecnico;
 import persistencia.exceptions.NonexistentEntityException;
+import Service.CustomJTable;
 
 public class RrhhView extends javax.swing.JPanel {
 
@@ -82,20 +83,20 @@ public class RrhhView extends javax.swing.JPanel {
         btEliminar = new javax.swing.JButton();
         btGuardar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbTecnicos = new javax.swing.JTable();
+        tbTecnicos = new CustomJTable();
         cbEditar = new javax.swing.JCheckBox();
         pIncidentes = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tbListadoIncidentes = new javax.swing.JTable();
+        tbListadoIncidentes = new CustomJTable();
         jLabel1 = new javax.swing.JLabel();
         pRanking = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tbTecnicoMasRapido = new javax.swing.JTable();
+        tbTecnicoMasRapido = new CustomJTable();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        tbTecnicosConMasIncidentes = new javax.swing.JTable();
+        tbTecnicosConMasIncidentes = new CustomJTable();
         jScrollPane5 = new javax.swing.JScrollPane();
-        tbMasIncidentesPorCategoria = new javax.swing.JTable();
+        tbMasIncidentesPorCategoria = new CustomJTable();
         jLabel8 = new javax.swing.JLabel();
         cbNDias = new javax.swing.JComboBox<>();
         cbCategoria = new javax.swing.JComboBox<>();
@@ -114,8 +115,6 @@ public class RrhhView extends javax.swing.JPanel {
                 jTabbedPane1MouseClicked(evt);
             }
         });
-
-        pGestion.setBackground(new java.awt.Color(0, 102, 102));
 
         jLabel2.setFont(new java.awt.Font("Cantarell", 1, 26)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -332,8 +331,6 @@ public class RrhhView extends javax.swing.JPanel {
 
         jTabbedPane1.addTab("Gestion de Personal", pGestion);
 
-        pIncidentes.setBackground(new java.awt.Color(102, 102, 0));
-
         tbListadoIncidentes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -375,8 +372,6 @@ public class RrhhView extends javax.swing.JPanel {
         );
 
         jTabbedPane1.addTab("Estado Incidentes", pIncidentes);
-
-        pRanking.setBackground(new java.awt.Color(0, 153, 255));
 
         tbTecnicoMasRapido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
