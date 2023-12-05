@@ -7,10 +7,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.swing.JOptionPane;
 import model.Incidente;
+import model.Tecnico;
 import persistenceJPA.exceptions.NonexistentEntityException;
 
 /**
@@ -162,5 +164,26 @@ public class IncidenteJpaController implements Serializable {
             em.close();
         }
     }
+    
+    public List<Incidente> listarIncidentesPorTecnico(Tecnico tecnico) {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Incidente> cq = cb.createQuery(Incidente.class);
+            Root<Incidente> root = cq.from(Incidente.class);
+
+            // Agrega el predicado para filtrar por técnico
+            cq.where(cb.equal(root.get("tecnico"), tecnico));
+
+            Query query = em.createQuery(cq);
+            return query.getResultList();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
 
 }

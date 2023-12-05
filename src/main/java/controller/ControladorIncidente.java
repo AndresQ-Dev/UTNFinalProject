@@ -1,8 +1,10 @@
 
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import model.Incidente;
+import model.Tecnico;
 import persistenceJPA.ControladoraPersistencia;
 import persistenceJPA.exceptions.NonexistentEntityException;
 
@@ -31,5 +33,8 @@ public class ControladorIncidente {
     public List<Incidente> listarIncidentes(){
         return controlPersist.listarincidentes();
     }
-   
+    
+    public List<Incidente> listarIncidentesPorTecnico(Tecnico tecnico) {
+        return controlPersist.listarIncidentesPorTecnico(tecnico);
+    }
 }

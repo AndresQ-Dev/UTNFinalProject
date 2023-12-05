@@ -109,4 +109,8 @@ public class ControladoraPersistencia {
     public List<Incidente> listarincidentes(){
         return incidenteJpa.findIncidenteEntities();
     }
+    
+    public List<Incidente> listarIncidentesPorTecnico(Tecnico tecnico) {
+    return incidenteJpa.listarIncidentesPorTecnico(tecnico);
+}
 }
