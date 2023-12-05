@@ -31,7 +31,7 @@ public class ControladoraPersistencia {
         emf = Persistence.createEntityManagerFactory("persistenceUnit");
         clienteJpa = new ClienteJpaController(emf);
         tecnicoJpa = new TecnicoJpaController(emf);
-        incidenteJpa=new IncidenteJpaController(emf);
+        incidenteJpa = new IncidenteJpaController(emf);
     }
 
 // Método para obtener la instancia única de la clase
@@ -84,33 +84,33 @@ public class ControladoraPersistencia {
     public Tecnico buscarTecnicoPorId(int id) {
         return tecnicoJpa.findTecnico(id);
     }
-    
-    public void eliminarTecnico(int id) throws NonexistentEntityException{
+
+    public void eliminarTecnico(int id) throws NonexistentEntityException {
         tecnicoJpa.deleteTecnico(id);
     }
-    
+
     //==============Metodos para Incidente=================//
-    public void crearIncidente(Incidente incidente){
-      incidenteJpa.create(incidente);
+    public void crearIncidente(Incidente incidente) {
+        incidenteJpa.create(incidente);
     }
-    
-    public void eliminarIncidente(int id) throws persistenceJPA.exceptions.NonexistentEntityException,IllegalStateException{
+
+    public void eliminarIncidente(int id) throws persistenceJPA.exceptions.NonexistentEntityException, IllegalStateException {
         incidenteJpa.destroySoftIncident(id);
     }
-    
-    public void editarIncidente(Incidente incidente) throws Exception{
+
+    public void editarIncidente(Incidente incidente) throws Exception {
         incidenteJpa.edit(incidente);
     }
-    
-    public Incidente buscarIncidentePorId(int id){
+
+    public Incidente buscarIncidentePorId(int id) {
         return incidenteJpa.findIncidente(id);
     }
-    
-    public List<Incidente> listarincidentes(){
+
+    public List<Incidente> listarincidentes() {
         return incidenteJpa.findIncidenteEntities();
     }
-    
+
     public List<Incidente> listarIncidentesPorTecnico(Tecnico tecnico) {
-    return incidenteJpa.listarIncidentesPorTecnico(tecnico);
-}
+        return incidenteJpa.listarIncidentesPorTecnico(tecnico);
+    }
 }

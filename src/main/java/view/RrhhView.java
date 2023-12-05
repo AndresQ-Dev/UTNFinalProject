@@ -8,6 +8,8 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +42,7 @@ public class RrhhView extends javax.swing.JPanel {
     DefaultTableModel modeloTablaTecnicoMasRapido = crearDefaultTableModel();
     DefaultTableModel modeloTablaMasIncidentesEnNDias = crearDefaultTableModel();
     DefaultTableModel modeloTablaMasIncidentesPorCategoria = crearDefaultTableModel();
+    DefaultTableModel modeloTablaTecnicosMasIncidentes = crearDefaultTableModel();
 
     public RrhhView() {
         initComponents();
@@ -47,8 +50,12 @@ public class RrhhView extends javax.swing.JPanel {
         cabeceraTablaTecnico();
         cargarTablaTecnico();
         cargarCabeceraTablaListadoIncidentes();
-        //cargarTablaListadoIncidentes();
         cargarCabeceraTablaRankTecnico();
+        cabeceraTablaTecnicosMasInci();
+        cargaComboRanking();
+        cabeceraTablaMasIncidentesXCategoria();
+        setupComboBox();
+//cargarTecnicosMasIncidentesEnCategoriaYNDias();
     }
 
     @SuppressWarnings("unchecked")
@@ -86,12 +93,15 @@ public class RrhhView extends javax.swing.JPanel {
         tbTecnicoMasRapido = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tbTecnicosConMasIncidentes = new javax.swing.JTable();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tbMasIncidentesPorCategoria = new javax.swing.JTable();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cbNDias = new javax.swing.JComboBox<>();
+        cbCategoria = new javax.swing.JComboBox<>();
+        cbNDias2 = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(1024, 740));
 
@@ -385,7 +395,7 @@ public class RrhhView extends javax.swing.JPanel {
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Ranking de Técnicos");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tbTecnicosConMasIncidentes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -396,9 +406,9 @@ public class RrhhView extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane4.setViewportView(jTable2);
+        jScrollPane4.setViewportView(tbTecnicosConMasIncidentes);
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tbMasIncidentesPorCategoria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -409,17 +419,54 @@ public class RrhhView extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane5.setViewportView(jTable3);
+        jScrollPane5.setViewportView(tbMasIncidentesPorCategoria);
 
         jLabel8.setFont(new java.awt.Font("Cantarell", 1, 18)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("<-- Tecnico más Rapido");
 
-        jComboBox1.setFont(new java.awt.Font("Cantarell", 1, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7" }));
+        cbNDias.setFont(new java.awt.Font("Cantarell", 1, 18)); // NOI18N
+        cbNDias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+        cbNDias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbNDiasActionPerformed(evt);
+            }
+        });
+        cbNDias.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                cbNDiasPropertyChange(evt);
+            }
+        });
 
-        jComboBox2.setFont(new java.awt.Font("Cantarell", 1, 18)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbCategoria.setFont(new java.awt.Font("Cantarell", 1, 15)); // NOI18N
+        cbCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCategoriaActionPerformed(evt);
+            }
+        });
+        cbCategoria.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                cbCategoriaPropertyChange(evt);
+            }
+        });
+
+        cbNDias2.setFont(new java.awt.Font("Cantarell", 1, 18)); // NOI18N
+        cbNDias2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbNDias2ActionPerformed(evt);
+            }
+        });
+        cbNDias2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                cbNDias2PropertyChange(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Cantarell", 1, 18)); // NOI18N
+        jLabel9.setText("Tecnicos con más Incidentes resueltos en N dias.");
+
+        jLabel10.setFont(new java.awt.Font("Cantarell", 1, 18)); // NOI18N
+        jLabel10.setText("Incidentes resueltos por categoria seleccioanda en N dias");
 
         javax.swing.GroupLayout pRankingLayout = new javax.swing.GroupLayout(pRanking);
         pRanking.setLayout(pRankingLayout);
@@ -434,15 +481,23 @@ public class RrhhView extends javax.swing.JPanel {
                     .addComponent(jScrollPane5))
                 .addGroup(pRankingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pRankingLayout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(43, 43, 43)
+                        .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pRankingLayout.createSequentialGroup()
                         .addGap(89, 89, 89)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pRankingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbNDias, 0, 90, Short.MAX_VALUE)
+                            .addComponent(cbNDias2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(pRankingLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(44, 44, 44))
+            .addGroup(pRankingLayout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addGroup(pRankingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel10))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pRankingLayout.setVerticalGroup(
             pRankingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -452,19 +507,26 @@ public class RrhhView extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(pRankingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pRankingLayout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(206, 206, 206)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 155, Short.MAX_VALUE)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(90, 90, 90))
-                    .addGroup(pRankingLayout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGap(33, 33, 33)
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGap(46, 46, 46)
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGap(37, 37, 37))))
+                        .addGap(37, 37, 37))
+                    .addGroup(pRankingLayout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(jLabel8)
+                        .addGap(160, 160, 160)
+                        .addComponent(cbNDias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
+                        .addComponent(cbNDias2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52))))
         );
 
         jTabbedPane1.addTab("Ranking Tecnicos", pRanking);
@@ -621,17 +683,44 @@ public class RrhhView extends javax.swing.JPanel {
         cargarTecnicoMasRapido();
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
+    private void cbNDiasPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cbNDiasPropertyChange
+
+    }//GEN-LAST:event_cbNDiasPropertyChange
+
+    private void cbNDias2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cbNDias2PropertyChange
+
+    }//GEN-LAST:event_cbNDias2PropertyChange
+
+    private void cbCategoriaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cbCategoriaPropertyChange
+    }//GEN-LAST:event_cbCategoriaPropertyChange
+
+    private void cbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCategoriaActionPerformed
+        System.out.println("Lamado en CATEGORIAS en actionPerform");
+        cargarTecnicosMasIncidentesEnCategoriaYNDias();//V
+    }//GEN-LAST:event_cbCategoriaActionPerformed
+
+    private void cbNDias2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNDias2ActionPerformed
+        System.out.println("Llamdao en numero de DIAS");//V
+        cargarTecnicosMasIncidentesEnCategoriaYNDias();
+    }//GEN-LAST:event_cbNDias2ActionPerformed
+
+    private void cbNDiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbNDiasActionPerformed
+        cargarTecnicosMasIncidentesResueltosEnUltimosNDias();//V
+    }//GEN-LAST:event_cbNDiasActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btEliminar;
     private javax.swing.JButton btGuardar;
     private javax.swing.JButton btNuevo;
+    private javax.swing.JComboBox<EnumTipoServicio> cbCategoria;
     private javax.swing.JCheckBox cbEditar;
     private javax.swing.JComboBox<EnumTipoServicio> cbEspecialidad;
+    private javax.swing.JComboBox<String> cbNDias;
+    private javax.swing.JComboBox<Integer> cbNDias2;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -639,14 +728,13 @@ public class RrhhView extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
     private javax.swing.JLabel lbTitulo;
     private javax.swing.JPanel pGestion;
     private javax.swing.JPanel pIncidentes;
@@ -654,8 +742,10 @@ public class RrhhView extends javax.swing.JPanel {
     private javax.swing.JRadioButton rbDisponibilidad;
     private javax.swing.JRadioButton rbEstado;
     private javax.swing.JTable tbListadoIncidentes;
+    private javax.swing.JTable tbMasIncidentesPorCategoria;
     private javax.swing.JTable tbTecnicoMasRapido;
     private javax.swing.JTable tbTecnicos;
+    private javax.swing.JTable tbTecnicosConMasIncidentes;
     private javax.swing.JTextField tfApellidoNombre;
     private javax.swing.JTextField tfBusqueda;
     private javax.swing.JTextField tfCuil;
@@ -782,21 +872,20 @@ public class RrhhView extends javax.swing.JPanel {
     }
 
     private void cargarTecnicoMasRapido() {
-        System.out.println("FAST");
         limpiarTablaX(modeloTablaTecnicoMasRapido);
-        List<Tecnico> listaTecnicos = controlTecnico.listarTecnicos();//traigo todos los tecnicos
+        List<Tecnico> listaTodosLosTecnicos = controlTecnico.listarTecnicos();//traigo todos los tecnicos
         double mejorPromedio = Double.MAX_VALUE; // Inicializar con el valor maximo de double
         Tecnico tecMejorPromedio = null;//mejor tecnico en null
 
-        for (Tecnico tecnico : listaTecnicos) {//1) recorro todos los Tecnicos
+        for (Tecnico tecnico : listaTodosLosTecnicos) {//1) recorro todos los Tecnicos
             //traigo todos los incidentes.
             List<Incidente> listaIncidentes = controlIncidente.listarIncidentesPorTecnico(tecnico);
-            int contadorIncid = 0;//contador para incidentes finalizados de un tecnico en particular.
+            int contadorIncidente = 0;//contador para incidentes finalizados de un tecnico en particular.
             long acumTiempoResolucion = 0;//acumulador de timepo de resolucion para promedio.
 
             for (Incidente incidente : listaIncidentes) {//Recorro todos los Incidentes que coincidan con el tecnico y que esten finalizados
                 if (!incidente.isEstado() && incidente.getFechaFinalizacion() != null) {
-                    contadorIncid++;//agrego 1 al contador
+                    contadorIncidente++;//agrego 1 al contador
                     acumTiempoResolucion += incidente.getFechaFinalizacion().getTime() - incidente.getFechaAlta().getTime();//agrego tiempo al acumulador
                     //test consola
                     /*System.out.println("Tecnico: "+tecnico.getApellidoNombre());
@@ -804,12 +893,12 @@ public class RrhhView extends javax.swing.JPanel {
                     System.out.println("Acumulador tiempo: " + acumTiempoResolucion);*/
                 }
             }
-            if (contadorIncid > 0) { // Evitar error aritmetico (/0)
-                //obtengo el proemdio de tiempo en Milisegundos desde lo acumulado
-                double promedio = (double) acumTiempoResolucion / contadorIncid;
+            if (contadorIncidente > 0) { // Evitar error aritmetico (/0)
+                //obtengo el promedio de tiempo en Milisegundos desde lo acumulado
+                double promedio = (double) acumTiempoResolucion / contadorIncidente;
 
                 if (promedio < mejorPromedio) {
-                    mejorPromedio = promedio;//guardo el menor valor en variable mejor promedio
+                    mejorPromedio = promedio;//guardo el menor valor en variable mejorPromedio
                     tecMejorPromedio = tecnico;//guardo el tecnico mas rapido
                 }
             }
@@ -868,5 +957,193 @@ public class RrhhView extends javax.swing.JPanel {
 
     private void limpiarTablaX(DefaultTableModel modelTabla) {
         modelTabla.setRowCount(0);
+    }
+
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    //RANKING 2: Tecnicos con mas incidentes resultos en N dias
+    private void cabeceraTablaTecnicosMasInci() {
+        modeloTablaMasIncidentesEnNDias.addColumn("IdTecnico");
+        modeloTablaMasIncidentesEnNDias.addColumn("ApellidoNombre");
+        modeloTablaMasIncidentesEnNDias.addColumn("Categoria");
+        modeloTablaMasIncidentesEnNDias.addColumn("Incidentes");
+        tbTecnicosConMasIncidentes.setModel(modeloTablaMasIncidentesEnNDias);
+    }
+
+    private void cargarTecnicosMasIncidentesResueltosEnUltimosNDias() {
+        limpiarTablaX(modeloTablaMasIncidentesEnNDias);
+        int nDias = Integer.parseInt(cbNDias.getSelectedItem().toString());
+        System.out.println("TOP TÉCNICOS POR INCIDENTES RESUELTOS EN LOS ÚLTIMOS " + nDias + " DÍAS");
+
+        limpiarTablaX(modeloTablaTecnicosMasIncidentes);
+
+        List<Tecnico> listaTecnicos = controlTecnico.listarTecnicos();
+
+        // Estructura para almacenar el número de incidentes resueltos por cada técnico
+        Map<Tecnico, Integer> tecnicosConIncidentes = new HashMap<>();
+
+        // Obtener la fecha actual
+        Date fechaActual = new Date();
+
+        for (Tecnico tecnico : listaTecnicos) {
+            // Obtener la lista de incidentes resueltos en los últimos N días para el técnico actual
+            List<Incidente> incidentesResueltos = obtenerIncidentesResueltosEnUltimosNDias(tecnico, nDias, fechaActual);
+
+            // Contar la cantidad de incidentes resueltos y almacenar en el mapa
+            int cantidadIncidentesResueltos = incidentesResueltos.size();
+            tecnicosConIncidentes.put(tecnico, cantidadIncidentesResueltos);
+        }
+
+        // Ordenar la lista de técnicos por la cantidad de incidentes resueltos (de mayor a menor)
+        List<Tecnico> tecnicosOrdenados = tecnicosOrdenadosPorIncidentes(tecnicosConIncidentes);
+
+        // Agregar los técnicos ordenados a la tabla
+        for (Tecnico tecnico : tecnicosOrdenados) {
+            int cantidadIncidentes = tecnicosConIncidentes.get(tecnico);
+            modeloTablaMasIncidentesEnNDias.addRow(new Object[]{
+                tecnico.getIdTecnico(),
+                tecnico.getApellidoNombre(),
+                tecnico.getCategoria(),
+                cantidadIncidentes
+            });
+        }
+    }
+
+    private List<Incidente> obtenerIncidentesResueltosEnUltimosNDias(Tecnico tecnico, int nDias, Date fechaActual) {
+        // Ejemplo de cómo calcular la fecha límite
+        Calendar calendario = Calendar.getInstance();
+        calendario.setTime(fechaActual);
+        calendario.add(Calendar.DAY_OF_YEAR, -nDias);
+        Date fechaLimite = calendario.getTime();
+
+        // Obtener la lista de incidentes resueltos en el rango de fechas
+        List<Incidente> incidentesResueltos = new ArrayList<>();
+
+        // Obtener todos los incidentes del técnico
+        List<Incidente> listaIncidentes = controlIncidente.listarIncidentesPorTecnico(tecnico);
+
+        // Filtrar los incidentes resueltos en el rango de fechas
+        for (Incidente incidente : listaIncidentes) {
+            if (!incidente.isEstado() && incidente.getFechaFinalizacion() != null
+                    && incidente.getFechaFinalizacion().after(fechaLimite)) {
+                incidentesResueltos.add(incidente);
+            }
+        }
+        return incidentesResueltos;
+    }
+
+    private List<Tecnico> tecnicosOrdenadosPorIncidentes(Map<Tecnico, Integer> tecnicosConIncidentes) {
+        // Ordenar la lista de técnicos por la cantidad de incidentes resueltos (de mayor a menor)
+        return tecnicosConIncidentes.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //RANKING 3 tecnicos
+    private void cargaComboRanking() {
+        EnumTipoServicio[] enumCategoria = EnumTipoServicio.values();
+        DefaultComboBoxModel<EnumTipoServicio> comboBoxModel2 = new DefaultComboBoxModel<>(enumCategoria);
+        cbCategoria.setModel(comboBoxModel2);
+    }
+
+    private void cabeceraTablaMasIncidentesXCategoria() {
+        modeloTablaMasIncidentesPorCategoria.addColumn("IdTecnico");
+        modeloTablaMasIncidentesPorCategoria.addColumn("ApellidoNombre");
+        modeloTablaMasIncidentesPorCategoria.addColumn("Categoria");
+        modeloTablaMasIncidentesPorCategoria.addColumn("Incidentes");
+        tbMasIncidentesPorCategoria.setModel(modeloTablaMasIncidentesPorCategoria);
+    }
+
+    private void cargarTecnicosMasIncidentesEnCategoriaYNDias() {
+        int nDiasCat = Integer.parseInt(cbNDias2.getSelectedItem().toString());
+        System.out.println("nDias========= " + nDiasCat);
+        EnumTipoServicio categoria = (EnumTipoServicio) cbCategoria.getSelectedItem();
+
+        if (categoria != null && nDiasCat != 0) {
+            limpiarTablaX(modeloTablaMasIncidentesPorCategoria);
+
+            System.out.println("TOP TÉCNICOS POR INCIDENTES RESUELTOS EN LOS ÚLTIMOS " + nDiasCat + " DÍAS EN LA CATEGORÍA " + cbCategoria.getSelectedItem());
+
+            List<Tecnico> listaTecnicos = controlTecnico.listarTecnicos();
+
+            // Estructura HashMap para almacenar el número de incidentes resueltos por cada técnico
+            Map<Tecnico, Integer> tecnicosConIncidentes = new HashMap<>();
+
+            // Obtener la fecha actual
+            Date fechaActual = new Date();
+
+            // Obtener la categoría seleccionada del combo box
+            for (Tecnico tecnico : listaTecnicos) {
+                // Obtener la lista de incidentes resueltos en los últimos N días para el técnico actual y la categoría seleccionada
+                List<Incidente> incidentesResueltos = obtenerIncidentesResueltosEnUltimosNDias(tecnico, nDiasCat, fechaActual, categoria);
+
+                // Contar la cantidad de incidentes resueltos y almacenar en el mapa
+                int cantidadIncidentesResueltos = incidentesResueltos.size();
+                if (cantidadIncidentesResueltos > 0) {
+                    tecnicosConIncidentes.put(tecnico, cantidadIncidentesResueltos);
+                }
+            }
+
+            // Ordenar la lista de técnicos por la cantidad de incidentes resueltos (de mayor a menor)
+            List<Tecnico> tecnicosOrdenados = tecnicosOrdenadosPorIncidentes(tecnicosConIncidentes);
+
+            // Agregar los técnicos ordenados a la tabla
+            for (Tecnico tecnico : tecnicosOrdenados) {
+                int cantidadIncidentes = tecnicosConIncidentes.get(tecnico);
+                modeloTablaMasIncidentesPorCategoria.addRow(new Object[]{
+                    tecnico.getIdTecnico(),
+                    tecnico.getApellidoNombre(),
+                    tecnico.getCategoria(),
+                    cantidadIncidentes
+                });
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar los dias y categoria.");
+        }
+    }
+
+    private List<Incidente> obtenerIncidentesResueltosEnUltimosNDias(Tecnico tecnico, int nDias, Date fechaActual, EnumTipoServicio categoria) {
+        // calcular la fecha límite
+        Calendar calendario = Calendar.getInstance();
+        calendario.setTime(fechaActual);
+        calendario.add(Calendar.DAY_OF_YEAR, -nDias);
+        Date fechaLimite = calendario.getTime();
+
+        // Obtener la lista de incidentes resueltos en el rango de fechas y de la categoría seleccionada
+        List<Incidente> incidentesResueltos = new ArrayList<>();
+
+        // Obtener todos los incidentes del técnico
+        List<Incidente> listaIncidentes = controlIncidente.listarIncidentesPorTecnico(tecnico);
+
+        // Filtrar los incidentes resueltos en el rango de fechas y de la categoría seleccionada
+        for (Incidente incidente : listaIncidentes) {
+            if (!incidente.isEstado() && incidente.getFechaFinalizacion() != null
+                    && incidente.getFechaFinalizacion().after(fechaLimite) && incidente.getCategoriaServicio() == categoria) {
+                incidentesResueltos.add(incidente);
+            }
+        }
+        return incidentesResueltos;
+    }
+
+    private List<Tecnico> tecnicosOrdenadosPorIncidentesYCategoria(Map<Tecnico, Integer> tecnicosConIncidentes) {
+        // Ordenar la lista de técnicos por la cantidad de incidentes resueltos (de mayor a menor)
+        return tecnicosConIncidentes.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+    }
+
+    private void setupComboBox() {
+        Integer[] numeros = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        DefaultComboBoxModel<Integer> comboBoxModel = new DefaultComboBoxModel<>(numeros);
+        // Configurar el modelo en el ComboBox
+        cbNDias2.setModel(comboBoxModel);
+        // Establecer un valor predeterminado en 1.
+        cbNDias2.setSelectedItem(1);
     }
 }
