@@ -421,7 +421,7 @@ public class RrhhView extends javax.swing.JPanel {
         jLabel8.setText("<-- Tecnico más Rapido");
 
         cbNDias.setFont(new java.awt.Font("Cantarell", 1, 18)); // NOI18N
-        cbNDias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+        cbNDias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "15", "30", "60" }));
         cbNDias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbNDiasActionPerformed(evt);
@@ -1134,7 +1134,7 @@ public class RrhhView extends javax.swing.JPanel {
     }
 
     private void setupComboBox() {
-        Integer[] numeros = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        Integer[] numeros = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10,15,30,60};
         DefaultComboBoxModel<Integer> comboBoxModel = new DefaultComboBoxModel<>(numeros);
         // Configurar el modelo en el ComboBox
         cbNDias2.setModel(comboBoxModel);
